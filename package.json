@@ -1,0 +1,17 @@
+{
+  "name": "image-tool",
+  "version": "1.0.0",
+  "description": "image-tool",
+  "main": "",
+  "scripts": {
+    "start": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Skrenta",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^4.0.0",
+    "gulp-riot": "^0.5.2"
+  }
+}
