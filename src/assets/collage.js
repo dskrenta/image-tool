@@ -100,8 +100,8 @@ class Collage {
   }
 
   swapImages (cell1, cell2) {
-    const img1 = this.subCanvases[cell1 - 1].imageId;
-    const img2 = this.subCanvases[cell2 - 1].imageId;
+    const img1 = this.subCanvases[cell1].imageId;
+    const img2 = this.subCanvases[cell2].imageId;
     this.removeImage(cell1);
     this.remoteImage(cell2);
     this.addImage(cell1, img2);
