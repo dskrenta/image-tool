@@ -3,6 +3,8 @@
     <h1>Collage</h1>
     <hr />
     <span id="collage"></span>
+    <br />
+    <button class="btn btn-block" onclick={ exportImage }>Export Image</button>
   </div>
 
   <script>
@@ -14,5 +16,10 @@
       opts.trigger('addImage', '91RRSPSC0ITDHNIR', 1);
       opts.trigger('addImage', '4TEE736PM5SPCA76', 2);
     });
+
+    exportImage () {
+        console.log('export image');
+        opts.trigger('exportImage');
+    }
   </script>
 </collage>

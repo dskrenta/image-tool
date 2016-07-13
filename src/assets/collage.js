@@ -29,6 +29,10 @@ class Collage {
       this.addImage(imageId, cell);
       this.subCanvases[cell].imageId = imageId;
     });
+
+    opts.on('exportImage', () => {
+      this.exportFinalImage();
+    })
   }
 
   createSubCanvas (i) {
@@ -117,10 +121,23 @@ class Collage {
   }
 
   exportFinalImage () {
+    const finalCanvas = document.getElementById('finalCanvas');
+    const finalCtx = finalCanvas.getContext('2d');
+
+    for (let i = 0; i < this.cells; i++) {
+      let xPos = 0;
+      if (i != 0) xPos = this.cellWidth * i;
+      const canvas = document.getElementById(`canvas${i}`);
+      finalCtx.drawImage(canvas, xPos, 0, canvas.width, canvas.height);
+    }
+
     try {
-      // export image
+      const finalImageData = finalCanvas.toDataURL('image/png');
+      const finalImage = document.createElement('img');
+      finalImage.src = finalImageData;
+      document.body.appendChild(finalImage);
     } catch (err) {
-      // tainted canvas!
+      console.log(err);
     }
   }
 
