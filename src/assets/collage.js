@@ -27,7 +27,7 @@ class Collage {
 
     opts.on('addImage', (imageId, cell) => {
       this.addImage(imageId, cell);
-      this.subCanvases[cell - 1].imageId = imageId;
+      this.subCanvases[cell].imageId = imageId;
     });
   }
 
@@ -60,9 +60,9 @@ class Collage {
   }
 
   addImage (imageId, cell) {
-    const canvas = this.subCanvases[cell - 1].canvas;
-    const ctx = this.subCanvases[cell - 1].ctx;
-    this.subCanvases[cell - 1].imageId = imageId;
+    const canvas = this.subCanvases[cell].canvas;
+    const ctx = this.subCanvases[cell].ctx;
+    this.subCanvases[cell].imageId = imageId;
     const imgSrc = `http://proxy.topixcdn.com/ipicimg/${imageId}-rszh${canvas.height}`;
     const img = new Image();
     img.style.display = 'none';
@@ -74,18 +74,18 @@ class Collage {
         0,
         canvas.width,
         canvas.height,
-        this.subCanvases[cell - 1].offsetX,
-        this.subCanvases[cell - 1].offsetY
+        this.subCanvases[cell].offsetX,
+        this.subCanvases[cell].offsetY
       );
     }
     img.src = imgSrc;
   }
 
   removeImage (cell) {
-    const canvas = this.subCanvases[cell - 1].canvas;
-    const ctx = this.subCanvases[cell - 1].ctx;
+    const canvas = this.subCanvases[cell].canvas;
+    const ctx = this.subCanvases[cell].ctx;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    this.subCanvases[cell - 1].imageId = null;
+    this.subCanvases[cell].imageId = null;
   }
 
   changeXOffset (direction) {
@@ -94,9 +94,9 @@ class Collage {
   }
 
   resizeImageHeight (cell) {
-    const canvas = this.subCanvases[cell - 1];
+    const canvas = this.subCanvases[cell];
     this.removeImage(cell);
-    this.addImage(this.subCanvases[cell - 1].imageId, cell); // with different rszh value
+    this.addImage(this.subCanvases[cell].imageId, cell); // with different rszh value
   }
 
   swapImages (cell1, cell2) {
