@@ -6,7 +6,7 @@ var paths = {
   src: 'src',
   build: 'build',
   riotSrcPath: 'src/components/*.tag',
-  riotBuildPath: 'build/js',
+  riotBuildPath: 'build/components',
   assetsSrcPath: 'src/assets/**/**',
   assetsBuildPath: 'build/assets',
   srcIndex: 'src/*.html'

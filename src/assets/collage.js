@@ -1,11 +1,15 @@
-export default class Collage {
-  constructor (cells, finalWidth, finalHeight) {
+//export default class Collage {
+
+class Collage {
+  constructor (cells, finalWidth, finalHeight, doc) {
     this.cells = cells;
     this.finalCanvasWidth = finalWidth;
     this.finalCanvasHeight = finalHeight;
     this.cellWidth = this.finalCanvasWidth / this.cells;
     this.subCanvases = [];
+    this.doc = doc;
 
+    riot.observable(this);
     this.init();
   }
 
@@ -14,22 +18,30 @@ export default class Collage {
       this.createSubCanvas(i);
     }
 
-    const finalCanvas = doument.createElement('canvas');
+    const finalCanvas = this.doc.createElement('canvas');
     finalCanvas.setAttribute('id', 'finalCanvas');
     finalCanvas.width = this.finalCanvasWidth;
     finalCanvas.height = this.finalCanvasHeight;
     finalCanvas.style.display = 'none';
-    document.body.appendChild(finalCanvas);
+    this.doc.body.appendChild(finalCanvas);
   }
 
-  createSubCanvas(i) {
-    const canvas = document.createElement('canvas');
+  createSubCanvas (i) {
+    const canvas = this.doc.createElement('canvas');
     const ctx = canvas.getContext('2d');
     canvas.setAttribute('id', `canvas${i}`);
     canvas.width = this.cellWidth;
     canvas.height = this.finalCanvasHeight;
-    document.body.appendChild(canvas);
-    const subCanvas = {canvas: canvas, ctx: ctx, imageId: null};
+    canvas.style.border =  'dashed 1px red'; // visibility
+    //this.doc.body.appendChild(canvas);
+    this.doc.getElementById('collage').appendChild(canvas);
+    const subCanvas = {
+      canvas: canvas,
+      ctx: ctx,
+      imageId: null,
+      offsetX: 0.0,
+      offsetY: 0.0
+    };
     this.subCanvases.push(subCanvas);
   }
 
@@ -41,7 +53,16 @@ export default class Collage {
     const img = new Image();
     img.style.display = 'none';
     img.onload = () => {
-      Collage.drawImageProp(ctx, img, 0, 0, canvas.width, canvas.height, 0.0, 0.0); // add vars for these offsets
+      Collage.drawImageProp(
+        ctx,
+        img,
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+        this.subCanvases[cell - 1].offsetX,
+        this.subCanvases[cell - 1].offsetY
+      );
     }
     img.src = imgSrc;
   }
@@ -53,12 +74,12 @@ export default class Collage {
     this.subCanvases[cell - 1].imageId = null;
   }
 
-  changeXOffset () {
+  changeXOffset (direction) {
     // remove previous image
     // redraw with new coordinates
   }
 
-  resizeImageHeight(cell) {
+  resizeImageHeight (cell) {
     const canvas = this.subCanvases[cell - 1];
     this.removeImage(cell);
     this.addImage(this.subCanvases[cell - 1].imageId, cell); // with different rszh value
@@ -74,7 +95,7 @@ export default class Collage {
   }
 
   removeCell () {
-    // delete rightmost image and resize remaining (redraw)
+    // delete rightmost cell and resize remaining (redraw)
   }
 
   addCell () {

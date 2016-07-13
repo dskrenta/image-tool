@@ -4,24 +4,17 @@
   </head>
   <body>
     <div class="container">
-      <div class="columns">
-        <div class="column col-6"><h2>Hello!</h2></div>
-        <div class="column col-3"><p>Cool</p></div>
-        <div class="column col-2"><p>Cool</p></div>
-        <div class="column col-1"><p>Cool</p></div>
-      </div>
-      <div class="columns col-gapless">
-        <div class="column col-6"><h1>Hello!</h1></div>
-        <div class="column col-6"><h1>Hello!</h1></div>
-      </div>
+      <h1>Collage</h1>
+      <hr />
+      <span id="collage"></span>
     </div>
-    <example></example>
     <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/riot/2.5/riot.min.js"></script>
-    <script src="assets/sample.js"></script>
-    <script src="js/example.js"></script>
+    <script src="assets/collage.js"></script>
+    <script src="components/collage.js"></script>
     <script>
-      riot.mount('example');
+      const collage = new Collage(3, 810, 415, document);
+      riot.mount('collage', collage);
     </script>
   </body>
 </html>
