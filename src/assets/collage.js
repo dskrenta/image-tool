@@ -7,23 +7,28 @@ class Collage {
     this.finalCanvasHeight = finalHeight;
     this.cellWidth = this.finalCanvasWidth / this.cells;
     this.subCanvases = [];
-    this.doc = doc;
+    //this.doc = doc; // document object of index.html
+    this.doc;
 
-    riot.observable(this);
-    this.init();
+    const opts = riot.observable(this);
+    this.init(opts);
   }
 
-  init () {
-    for (let i = 0; i < this.cells; i++) {
-      this.createSubCanvas(i);
-    }
+  init (opts) {
+    opts.on('mounted', (doc) => {
+      this.doc = doc; // document object of riot collage tag
 
-    const finalCanvas = this.doc.createElement('canvas');
-    finalCanvas.setAttribute('id', 'finalCanvas');
-    finalCanvas.width = this.finalCanvasWidth;
-    finalCanvas.height = this.finalCanvasHeight;
-    finalCanvas.style.display = 'none';
-    this.doc.body.appendChild(finalCanvas);
+      for (let i = 0; i < this.cells; i++) {
+        this.createSubCanvas(i);
+      }
+
+      this.createFinalCanvas();
+    });
+
+    opts.on('addImage', (imageId, cell) => {
+      this.addImage(imageId, cell);
+      this.subCanvases[cell - 1].imageId = imageId;
+    });
   }
 
   createSubCanvas (i) {
@@ -45,11 +50,20 @@ class Collage {
     this.subCanvases.push(subCanvas);
   }
 
+  createFinalCanvas () {
+    const finalCanvas = this.doc.createElement('canvas');
+    finalCanvas.setAttribute('id', 'finalCanvas');
+    finalCanvas.width = this.finalCanvasWidth;
+    finalCanvas.height = this.finalCanvasHeight;
+    finalCanvas.style.display = 'none';
+    this.doc.body.appendChild(finalCanvas);
+  }
+
   addImage (imageId, cell) {
     const canvas = this.subCanvases[cell - 1].canvas;
     const ctx = this.subCanvases[cell - 1].ctx;
     this.subCanvases[cell - 1].imageId = imageId;
-    const imgSrc = `http://proxy.topixcdn.com/ipicimg/${imgID}-rszh${canvas.height}`;
+    const imgSrc = `http://proxy.topixcdn.com/ipicimg/${imageId}-rszh${canvas.height}`;
     const img = new Image();
     img.style.display = 'none';
     img.onload = () => {
