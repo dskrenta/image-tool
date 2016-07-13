@@ -44,7 +44,7 @@ class Collage {
       canvas: canvas,
       ctx: ctx,
       imageId: null,
-      offsetX: 0.0,
+      offsetX: 0.5,
       offsetY: 0.0
     };
     this.subCanvases.push(subCanvas);
