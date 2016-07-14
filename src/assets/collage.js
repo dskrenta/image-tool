@@ -85,6 +85,19 @@ class Collage {
     img.src = imgSrc;
   }
 
+  addImageFromUpload(imageSrc, cell) {
+    
+  }
+
+  uploadImage () {
+    // functionality to upload image from computer
+    const imageElement = this.doc.getElementById('file');
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      reader.result; // src
+    }
+  }
+
   removeImage (cell) {
     const canvas = this.subCanvases[cell].canvas;
     const ctx = this.subCanvases[cell].ctx;
@@ -139,6 +152,11 @@ class Collage {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  addImageToSlideshow () {
+    // export final image
+    // send some riot event
   }
 
   static drawImageProp (ctx, img, x, y, w, h, offsetX, offsetY) {

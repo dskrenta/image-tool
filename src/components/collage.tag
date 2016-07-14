@@ -1,10 +1,10 @@
 <collage>
   <div class="container">
-    <h1>Collage</h1>
-    <hr />
-    <span id="collage"></span>
-    <br />
-    <button class="btn btn-block" onclick={ exportImage }>Export Image</button>
+    <div class="empty">
+      <span id="collage"></span>
+      <br />
+      <button class="btn btn-block" onclick={ exportImage }>Export Image</button>
+    </div>
   </div>
 
   <script>
